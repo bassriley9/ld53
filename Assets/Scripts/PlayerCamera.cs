@@ -8,13 +8,17 @@ public class PlayerCamera : MonoBehaviour
     private Transform followTarget;
 
     [SerializeField]
+    [Min(0.1f)]
     private float dampening;
 
     [SerializeField]
     private Vector3 offset;
 
+    [SerializeField]
+    private Vector3 clamp;
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (followTarget == null) 
         {
@@ -23,6 +27,6 @@ public class PlayerCamera : MonoBehaviour
         }
 
         Vector3 target = followTarget.position + offset;
-        transform.position = Vector3.Lerp(transform.position, target, dampening * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, target, (1 / dampening) * Time.deltaTime);
     }
 }
