@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sheep : MonoBehaviour
+public class Sheep : MonoBehaviour
 {
 
     bool incaged = false;
