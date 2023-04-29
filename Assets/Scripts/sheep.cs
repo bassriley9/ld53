@@ -5,9 +5,11 @@ using UnityEngine;
 public class Sheep : MonoBehaviour
 {
 
-    bool incaged = false;
+    public bool incaged;
+    public bool sold;
 
-
+    public int value;
+    
 
     public float moveSpeed = 10f;
     public float rotateSpeed = 100f;
@@ -24,9 +26,18 @@ public class Sheep : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (name == "rare")
+        if (name == "Rare")
         {
             startled = true;
+
+
+        }else if(name == "Exotic")
+        {
+
+        }
+        else
+        {
+
         }
         if (startled == true)
         {
@@ -56,6 +67,10 @@ public class Sheep : MonoBehaviour
         if (isWalking == true)
         {
             rb.AddForce(transform.forward * moveSpeed / 3);
+        }
+        if(incaged == true)
+        {
+            Debug.Log("HUZZAAH");
         }
     }
 

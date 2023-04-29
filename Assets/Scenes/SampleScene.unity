@@ -897,9 +897,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a271213a41c126c41abcb8cdb4687949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  common: {fileID: 7213473783549704347, guid: 09de7b742677de34c89084d9868d2979, type: 3}
-  rare: {fileID: 4856645906412072761, guid: de9cac5452d496c46ba9c7aec01ed362, type: 3}
-  exotic: {fileID: 5979441389232373654, guid: 58416582d24061845bf02eb8a2e7f7c4, type: 3}
+  common: {fileID: 7064613652637721901, guid: 09de7b742677de34c89084d9868d2979, type: 3}
+  rare: {fileID: 5861790552962892802, guid: de9cac5452d496c46ba9c7aec01ed362, type: 3}
+  exotic: {fileID: -1784640275850540170, guid: 58416582d24061845bf02eb8a2e7f7c4, type: 3}
   spawners:
   - {fileID: 839153786}
   - {fileID: 365548806}
