@@ -5,9 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    public static GameManager instance;
     public Sheep common;
     public Sheep rare;
     public Sheep exotic;
+    public GameObject Player;
 
 
     //list of gameobjects/spawners to choose from
@@ -45,6 +47,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        if(instance)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+        
+    }
+
     private void Update()
     {
         
@@ -64,6 +79,8 @@ public class GameManager : MonoBehaviour
 
             SpawnTickRate = 5f;
         }
+        
+
        
     }
     void selectSheep(int i)
@@ -90,9 +107,16 @@ public class GameManager : MonoBehaviour
         Instantiate(sheep, spawners[i].transform.position, Quaternion.Euler(0, Random.Range(0,360), 0));
         //curSheep++;
         SheepInWOrld.Add(sheep);
+
+
+        //begin the discard count/ call discard
+        if (Vector3.Distance(Player.transform.position, sheep.transform.position) >= 15)
+        {
+
+        }
     }
 
-    void AddToPen(Sheep sheep)
+    public void AddToPen(Sheep sheep)
     {
         //sheepingworld --> add to sheepinpen
         //remove from sheepingWorld
@@ -104,7 +128,7 @@ public class GameManager : MonoBehaviour
         penCount++;
     }
 
-    void RemoveFromPen(Sheep sheep)
+    public void RemoveFromPen(Sheep sheep)
     {
         //sheepinPen-->add to sheepinWorld
         //remove form sheepinPen
@@ -115,14 +139,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void Discard(Sheep sheep)
+    public void Discard(Sheep sheep)
     {
-        //if sheep either not incaged and sold then discard
-        if(!sheep.incaged || sheep.sold)
-        {
-            // if sold add value 
-        }
-        //check bool for both
-    }
+        SheepInWOrld.Remove(sheep);
+        Destroy(sheep.gameObject);
 
+        //when we discrad one we replace it with another
+
+        selectSheep(Random.Range(0, 10));
+
+
+    }
 }
