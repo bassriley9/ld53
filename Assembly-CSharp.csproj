@@ -687,6 +687,10 @@
       <Name>MPUIKit.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="MPUIKit.Editor.csproj">
+      <Project>{07DF8DCF-6721-903D-9115-DD5222E3B41B}</Project>
+      <Name>MPUIKit.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

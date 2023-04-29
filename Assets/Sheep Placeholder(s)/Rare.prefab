@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 227869784059821939}
   - component: {fileID: 2621981448123837131}
   - component: {fileID: -1319367844617175625}
-  - component: {fileID: 5861790552962892802}
+  - component: {fileID: -1638962755495198282}
   m_Layer: 0
   m_Name: Rare
   m_TagString: Untagged
@@ -113,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &5861790552962892802
+--- !u!114 &-1638962755495198282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,5 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f27cb3c929d4694a97a5bb550fae0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  rotateSpeed: 100
+  incaged: 0
+  sold: 0
+  value: 10
+  Player: {fileID: 1488059305059017589, guid: 0aee898516804fc41a26de055d023f5c, type: 3}
+  DiscartTimer: 15
