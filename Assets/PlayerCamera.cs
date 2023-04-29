@@ -22,6 +22,9 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (followTarget == null) 
+        {
+            Debug.LogWarning("WARNING: No Follow Target Assigned.");
+        }
     }
 }
