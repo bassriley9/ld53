@@ -7,19 +7,26 @@ public class Sheep : MonoBehaviour
 
     public bool incaged;
     public bool sold;
+    bool insight = false;
 
     [SerializeField]
-    public int value;
-    
+    public int value = 5;
 
+    public GameObject Player;
+  
+    protected float moveSpeed = 10f;
+    protected float rotateSpeed = 100f;
 
-    public float moveSpeed = 10f;
-    public float rotateSpeed = 100f;
+    [SerializeField]
+    float DiscartTimer = 2f;
 
+    #region wandering
     private bool isWandering = false;
     private bool isRotL = false;
     private bool isRotR = false;
     private bool isWalking = false;
+    #endregion
+
 
     private bool startled = false;
 
@@ -34,14 +41,7 @@ public class Sheep : MonoBehaviour
             value = 10;
 
         }
-        else if(name == "Exotic")
-        {
-            value = 25;
-        }
-        else
-        {
-            value = 5;
-        }
+
         if (startled == true)
         {
             moveSpeed = (moveSpeed / 2) + moveSpeed;
@@ -75,6 +75,22 @@ public class Sheep : MonoBehaviour
         {
             Debug.Log("HUZZAAH");
         }
+
+        if(!insight)
+        {
+            //discardcheck;
+            if (DiscartTimer > 0)
+            {
+                DiscartTimer -= Time.deltaTime;
+            }
+            else
+            {
+                Debug.Log("delete");
+                GameManager.instance.Discard(this);
+            }
+        }
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -137,4 +153,13 @@ public class Sheep : MonoBehaviour
         isWandering = false;
     }
 
+    private void OnBecameInvisible()
+    {
+        insight = true;
+        DiscartTimer = 15f;
+    }
+    private void OnBecameVisible()
+    {
+        insight = false;
+    }
 }
