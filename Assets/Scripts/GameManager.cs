@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     private int curSheep = 0;
 
+
     // Start is called before the first frame update
     void Start()
     {
