@@ -38,13 +38,17 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private CapsuleCollider col;
+    private LayerMask groundLayerMask;
+    private float collisionThreshold = 0.01f;
 
     private InputAction moveAction;
     private InputAction interactAction;
 
-    private Vector2 moveInputs;
+    private float normalAngle;
     private float throwForce;
     private float interactTime;
+    private Vector2 moveInputs;
+    private Vector3 normal;
     private Sheep sheepHeld;
 
 
@@ -54,6 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+        groundLayerMask = LayerMask.NameToLayer("Ground");
 
         Setup();
     }
@@ -68,6 +73,11 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         Dispose();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
     }
 
     void Setup() 
@@ -111,6 +121,26 @@ public class PlayerController : MonoBehaviour
 
     void CheckCollisions() 
     {
+        // Ground
+        RaycastHit hit;
+        float distance = 2 * collisionThreshold;
+        Vector3 origin = transform.position + (col.radius + collisionThreshold) * Vector3.up;
+        if (Physics.SphereCast(origin, col.radius, Vector3.down, out hit, distance, groundLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            Vector3 contactPoint = origin + (Vector3.down * distance);
+            Vector3 contactDirection = hit.point - origin;
+            float contactOffset = contactDirection.magnitude + distance;
+
+            // Slopes
+            RaycastHit spherePoint;
+            if (Physics.Raycast(contactPoint, contactDirection, out spherePoint, contactOffset, groundLayerMask))
+            {
+                normal = spherePoint.normal;
+                normalAngle = Vector3.Angle(normal, Vector3.up);
+            }
+        }
+
+        // Interactables
         Collider[] cols = Physics.OverlapCapsule(transform.position, new Vector3(transform.position.x, transform.position.y + col.height, transform.position.z), col.radius);
 
         foreach (Collider col in cols) 
@@ -130,7 +160,6 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputAction.CallbackContext context) 
     {
         moveInputs = context.ReadValue<Vector2>();
-        print(moveInputs);
     }
 
     void OnInteractPress(InputAction.CallbackContext context) 
@@ -169,15 +198,25 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        // rotate
+        float a;
         Vector3 direction = new Vector3(moveInputs.x, 0, moveInputs.y);
-        if (direction.magnitude > 0)
+
+        if (direction.magnitude > 0.1f)
+        {
+            a = acceleration;
+
+            // rotate
             rb.MoveRotation(Quaternion.LookRotation(direction, transform.up));
+        } else
+        {
+            a = decceleration;
+        }
 
         // move
-        //float speed = movementSpeed * moveInputs.magnitude;
-        //rb.velocity = speed * transform.forward;
+        Vector3 velocity = speed * Vector3.ProjectOnPlane(transform.forward, normal) * moveInputs.magnitude;
+        rb.velocity = Vector3.Lerp(rb.velocity, velocity, a * 10 * Time.deltaTime);
 
+        // vfx
         if (rb.velocity.magnitude > speed * 0.8f) 
         {
         
