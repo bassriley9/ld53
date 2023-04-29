@@ -5,25 +5,40 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public GameObject common;
-    public GameObject rare;
-    public GameObject exotic;
+    public Sheep common;
+    public Sheep rare;
+    public Sheep exotic;
+
 
     //list of gameobjects/spawners to choose from
     public GameObject[] spawners;
+
+    List<Sheep> SheepInWOrld = new List<Sheep>();
+    
+    //Sheep[] sheepInWorld;
+    List<Sheep> sheepInPen = new List<Sheep>();
 
     //[SerializeField]
     private int maxSheep= 15;
     [SerializeField]
     private float SpawnTickRate = 10f;
 
-    private int curSheep = 0;
+    int count;
+    int penCount;
+    int PlayerWallet;
+    private int curSheep;
+    //curr = sheepInWorld.length- sheepInPen.length
+    //total = sheepInWorld.length + sheepInPen.length
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < spawners.Length; i++)
+        PlayerWallet = 0;
+        count = 0;
+        penCount = 0; 
+        for(int i = 0; i < 10; i++)
         {
             selectSheep(i);
 
@@ -32,14 +47,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        
         if(SpawnTickRate>0)
         {
             SpawnTickRate -= Time.deltaTime;
         }
         else 
         {
-            if(maxSheep >= curSheep)
+            if(maxSheep > SheepInWOrld.Count)
             {
                 Debug.Log(curSheep);
                 Debug.Log("sheep incoming");
@@ -49,6 +64,7 @@ public class GameManager : MonoBehaviour
 
             SpawnTickRate = 5f;
         }
+       
     }
     void selectSheep(int i)
     {
@@ -68,14 +84,45 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Spawn(GameObject sheep, int i)
+    void Spawn(Sheep sheep, int i)
     {
         
         Instantiate(sheep, spawners[i].transform.position, Quaternion.Euler(0, Random.Range(0,360), 0));
-        curSheep++;
+        //curSheep++;
+        SheepInWOrld.Add(sheep);
+    }
+
+    void AddToPen(Sheep sheep)
+    {
+        //sheepingworld --> add to sheepinpen
+        //remove from sheepingWorld
+        SheepInWOrld.Remove(sheep);
+        sheepInPen.Add(sheep);
+        //set sheep.incaged to true
+        sheep.incaged = true;
+        Debug.Log("sheep in pen");
+        penCount++;
+    }
+
+    void RemoveFromPen(Sheep sheep)
+    {
+        //sheepinPen-->add to sheepinWorld
+        //remove form sheepinPen
+        SheepInWOrld.Add(sheep);
+        sheepInPen.Remove(sheep);
+        //set sheep.incaged to false
+        sheep.incaged = false;
 
     }
 
-
+    void Discard(Sheep sheep)
+    {
+        //if sheep either not incaged and sold then discard
+        if(!sheep.incaged || sheep.sold)
+        {
+            // if sold add value 
+        }
+        //check bool for both
+    }
 
 }
