@@ -8,8 +8,10 @@ public class Sheep : MonoBehaviour
     public bool incaged;
     public bool sold;
 
+    [SerializeField]
     public int value;
     
+
 
     public float moveSpeed = 10f;
     public float rotateSpeed = 100f;
@@ -29,15 +31,16 @@ public class Sheep : MonoBehaviour
         if (name == "Rare")
         {
             startled = true;
+            value = 10;
 
-
-        }else if(name == "Exotic")
+        }
+        else if(name == "Exotic")
         {
-
+            value = 25;
         }
         else
         {
-
+            value = 5;
         }
         if (startled == true)
         {

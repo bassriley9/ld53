@@ -57,6 +57,8 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Sheep.cs" />
+    <Compile Include="Assets\Scripts\BackSheep.cs" />
+    <Compile Include="Assets\Scripts\GoldSheep.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -661,13 +663,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="MPUIKit.Editor.csproj">
-      <Project>{07DF8DCF-6721-903D-9115-DD5222E3B41B}</Project>
-      <Name>MPUIKit.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="MPUIKit.csproj">
       <Project>{137913E3-D4C6-E77E-0069-C4284AEF4E5C}</Project>
       <Name>MPUIKit</Name>
+    </ProjectReference>
+    <ProjectReference Include="MPUIKit.Editor.csproj">
+      <Project>{07DF8DCF-6721-903D-9115-DD5222E3B41B}</Project>
+      <Name>MPUIKit.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
