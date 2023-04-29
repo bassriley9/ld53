@@ -12,11 +12,12 @@ public class spawner : MonoBehaviour
     //list of gameobjects/spawners to choose from
     public GameObject[] spawners;
 
+    //[SerializeField]
+    private int maxSheep= 15;
     [SerializeField]
-    private int maxSheep;
-    [SerializeField]
-    private int SpawnTickRate;
+    private float SpawnTickRate = 10f;
 
+    private int curSheep = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +25,30 @@ public class spawner : MonoBehaviour
         for(int i = 0; i < spawners.Length; i++)
         {
             selectSheep(i);
+
         }
-        SpawnTickRate = 40;
     }
 
+    private void Update()
+    {
 
+        if(SpawnTickRate>0)
+        {
+            SpawnTickRate -= Time.deltaTime;
+        }
+        else 
+        {
+            if(maxSheep >= curSheep)
+            {
+                Debug.Log(curSheep);
+                Debug.Log("sheep incoming");
+                int randomI = Random.Range(0, 10);
+                selectSheep(randomI);
+            }
+
+            SpawnTickRate = 5f;
+        }
+    }
     void selectSheep(int i)
     {
         int percent = Random.Range(0, 100);
@@ -51,6 +71,7 @@ public class spawner : MonoBehaviour
     {
         
         Instantiate(sheep, spawners[i].transform.position, Quaternion.Euler(0, Random.Range(0,360), 0));
+        curSheep++;
 
     }
 
